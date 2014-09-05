@@ -1,0 +1,45 @@
+parameters:
+  connection:
+    host: localhost
+    port: 5672
+    vhost: /
+    login: guest
+    password: guest
+    read_timeout: 0
+
+  channel:
+    qos_size: 100
+
+  exchange:
+    name: test-exchange
+    type: AMQP_EX_TYPE_DIRECT
+
+  queue: []
+
+  publisher:
+    type: 'Buffered'
+
+
+services:
+  Amqp\Configuration\Connection:
+    class: Amqp\Configuration\Connection
+    arguments: ["%connection%"]
+
+  Amqp\Configuration\Channel:
+    class: Amqp\Configuration\Channel
+    calls:
+      - [setConfig, ["%channel%"]]
+
+  Amqp\Configuration\Exchange:
+    class: Amqp\Configuration\Exchange
+    arguments: ["%exchange%"]
+
+  Amqp\Configuration\Queue:
+    class: Amqp\Configuration\Queue
+    calls:
+      - [setConfig, ["%queue%"]]
+
+  Amqp\Configuration\Publisher:
+    class: Amqp\Configuration\Publisher
+    calls:
+      - [setConfig, ["%publisher%"]]
