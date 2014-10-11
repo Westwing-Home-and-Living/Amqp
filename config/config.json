@@ -1,0 +1,108 @@
+{
+    "connections": {
+        "connection1": {
+            "host": "test.1.local",
+            "port": 5672,
+            "vhost": "/test-vhost",
+            "login": "user",
+            "password": "password",
+            "readTimeout": 100.2,
+            "writeTimeout": 100.2,
+            "connectTimeout": 100.2
+        },
+        "connection2": {
+            "host": "test.2.local",
+            "port": 5672,
+            "vhost": "/test-vhost",
+            "login": "user",
+            "password": "password",
+            "readTimeout": 100.2,
+            "writeTimeout": 100.2,
+            "connectTimeout": 100.2
+        }
+    },
+    "channels": {
+        "channel1": {
+            "prefetchCount": 100,
+            "prefetchSize": 1002,
+            "connection": [
+                "@connection1",
+                "@connection2"
+            ]
+        },
+        "channel2": {
+            "prefetchCount": 100,
+            "prefetchSize": 1002,
+            "connection": [
+                "@connection1",
+                "@connection2"
+            ]
+        }
+    },
+    "exchanges": {
+        "exchange1": {
+            "channel": "@channel1",
+            "alternateExchange": "@exchange2",
+            "flags": [
+                "AMQP_DURABLE",
+                "AMQP_PASSIVE"
+            ],
+            "dynamicName": true,
+            "name": "Class->Method",
+            "type": "AMQP_EX_TYPE_FANOUT",
+            "bindings": {
+                "b1": {
+                    "exchange": "@exchange2",
+                    "routingKey": "test"
+                },
+                "b2": {
+                    "exchange": "@exchange3",
+                    "routingKey": "test"
+                }
+            },
+            "exchange2": {
+                "channel": "@channel1",
+                "alternateExchange": "@exchange1",
+                "flags": [
+                    "AMQP_DURABLE",
+                    "AMQP_PASSIVE"
+                ],
+                "dynamicName": true,
+                "name": "Class->Method",
+                "type": "AMQP_EX_TYPE_FANOUT",
+                "bindings": {
+                    "b1": {
+                        "exchange": "@exchange3",
+                        "routingKey": "test"
+                    },
+                    "b2": {
+                        "exchange": "@exchange1",
+                        "routingKey": "test"
+                    }
+                }
+            }
+        }
+    },
+    "queues": {
+        "queue1": {
+            "channel": "@channel1",
+            "deadLetterExchange": "@exchange1",
+            "durable": true,
+            "passive": true,
+            "exclusive": true,
+            "autodelete": true,
+            "dynamicName": true,
+            "name": "Class->name",
+            "bindings": {
+                "b1": {
+                    "exchange": "@exchange1",
+                    "routingKey": "routingkey1"
+                },
+                "b2": {
+                    "exchange": "@exchange2",
+                    "routingKey": "routingKey2"
+                }
+            }
+        }
+    }
+}
