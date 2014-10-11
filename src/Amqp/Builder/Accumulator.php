@@ -9,7 +9,9 @@
 
 namespace Amqp\Builder;
 
-class Accumulator
+use Amqp\Builder\Iface\Accumulator as IAccumulator;
+
+class Accumulator implements IAccumulator
 {
     /**
      * Connections array
