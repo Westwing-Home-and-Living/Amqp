@@ -25,7 +25,7 @@ class Publisher
 
     public function getType()
     {
-        $type =  (isset($configuration['type'])) ? $configuration['type'] : self::DEFAULT_TYPE;
+        $type =  (isset($this->configuration['type'])) ? $this->configuration['type'] : self::DEFAULT_TYPE;
 
         return $type;
     }

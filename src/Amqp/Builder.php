@@ -160,7 +160,11 @@ class Builder
         $publisherConfig    = $this->getConfig('Publisher');
         $publisherClassName = $publisherConfig->getType();
 
-        $publisherQualifiedClassName = self::PUBLISHER_NS . $publisherClassName;
+        if ($publisherClassName == "Simple") {
+            $publisherQualifiedClassName = self::PUBLISHER_NS . "Publisher";
+        } else {
+            $publisherQualifiedClassName = self::PUBLISHER_NS . $publisherClassName;
+        }
 
         if (!class_exists($publisherQualifiedClassName)) {
             throw new PublisherException(
