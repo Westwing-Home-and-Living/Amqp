@@ -1,11 +1,11 @@
 {
-    "name": "westwing/amqp",
+    "name": "Westwing-Home-and-Living/Amqp",
     "description": "Provide interfaces for sending messages between systems, initially for AMQP based drivers",
     "keywords": ["amqp", "RabbitMQ", "messaging-queue"],
     "homepage": "http://www.westwing.de",
-    "version": "1.0.5",
+    "version": "1.0.2",
     "type": "library",
-    "license": "Westwing",
+    "license": "MIT",
     "authors": [
         {
             "name": "Cristian Datculescu",
