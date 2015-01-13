@@ -3,7 +3,7 @@
     "description": "Provide interfaces for sending messages between systems, initially for AMQP based drivers",
     "keywords": ["amqp", "RabbitMQ", "messaging-queue"],
     "homepage": "http://www.westwing.de",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "type": "library",
     "license": "MIT",
     "authors": [

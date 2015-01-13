@@ -100,14 +100,15 @@ class Listener extends Amqp
         /** @var Collection $result */
         $result = $this->messageHandler->handleMessage($collection);
 
-        $queue->ack($message->getDeliveryTag());
-
         if (!$result instanceof Collection) {
             throw new MessageException("A collection must be returned by the processor of the message");
         }
 
         if ($result->count() > 0) {
+            $queue->nack($message->getDeliveryTag());
             $this->failedMessageHandler->handleFailed($result);
+        } else {
+            $queue->ack($message->getDeliveryTag());
         }
 
         // do not stop execution on failed message, pass the message to the failed driver
