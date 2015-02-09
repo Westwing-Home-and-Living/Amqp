@@ -37,6 +37,10 @@ abstract class Amqp
      */
     protected function push(Collection $collection)
     {
+        $attributes = $collection->getAttributes();
+        if (!isset($attributes['timestamp'])) {
+            $attributes['timestamp'] = time();
+        }
         $result = $this->exchange->publish(
             (string) $collection,
             $collection->getRoutingKey(),
